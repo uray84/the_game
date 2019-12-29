@@ -1,7 +1,5 @@
-#the game!
+#this is a simple game for me to practice python coding
 import random
-
-print("This is a game to practise python!")
 
 
 #character_stats():
@@ -276,17 +274,17 @@ def random_event(ran_num):
     elif boss_count==20:
         boss_battle()
         return boss_count, current_hp, boss_battle_done
-    elif ran_num in (1,2):
+    elif ran_num in (1,2,3):
         print("You continue down the road.")
         inn_check += 1
         boss_count+=1
         return inn_check, boss_count
-    elif ran_num in (3,4,5,6):
+    elif ran_num in (4,5,6,7,8,9):
         battle()
         inn_check += 1
         boss_count += 1
         return inn_check, boss_count
-    elif ran_num == 7:
+    elif ran_num in (10,11):
         print("You find a treasure chest!")
         treasure()
         print("Weapon:", weapon, ", Damage:", weapon_damage)
@@ -294,7 +292,7 @@ def random_event(ran_num):
         inn_check += 1
         boss_count+=1
         return inn_check, boss_count
-    elif ran_num in (8,9):
+    elif ran_num in (12,13,14):
         if current_hp<max_hp:
             print("You find an inn and stop to rest.\n Your HP has been restored.")
             current_hp=max_hp
@@ -315,9 +313,9 @@ boss_count=0
 turn=1
 
 while boss_battle_done == False and current_hp > 0:
-    ran_num=random.randint(1,10)
+    ran_num=random.randint(1,15)
     print("Turn:",turn)
-    print("dice roll:",ran_num)
+#    print("dice roll:",ran_num)
     random_event(ran_num)
     turn+=1
     print("---------------------------")
