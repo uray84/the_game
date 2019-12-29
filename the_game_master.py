@@ -314,7 +314,7 @@ inn_check=0
 boss_count=0
 turn=1
 
-while boss_battle_done == False or current_hp > 0:
+while boss_battle_done == False and current_hp > 0:
     ran_num=random.randint(1,10)
     print("Turn:",turn)
     print("dice roll:",ran_num)
