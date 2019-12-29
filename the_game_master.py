@@ -12,7 +12,7 @@ current_hp=15
 current_exp=0
 req_exp=10*level
 max_level=10
-#name=input("What is your adventures name? ")
+name=input("What is your name? ")
 
 
 #equipment_stats():
