@@ -1,8 +1,13 @@
 #this is a simple game for me to practice python coding
 import random
 
+#settings:
+boss_battle_done=False
+inn_check=0
+boss_count=0
+turn=1
 
-#character_stats():
+#character_stats:
 name=""
 level=1
 max_hp=15
@@ -12,13 +17,11 @@ req_exp=10
 max_level=10
 #name=input("What is your name? ")
 
-
-#equipment_stats():
+#equipment_stats:
 weapon="dagger"
 weapon_damage=1
 armour="clothes"
 armour_defence=0
-
 
 #print("Your name is",name)
 print("level:",level)
@@ -28,15 +31,12 @@ print("Current Exp:", current_exp)
 print("Exp for level up:", req_exp)
 print("Weapon:", weapon, ", Damage:", weapon_damage)
 print("Armour:", armour, ", Defence:", armour_defence)
-
 print("======================")
-
-
 
 #weapon dict
 weapon_list = {
     1:{"name": "sword", "damage":2},
-    2:{"name": "axe", "damage":3},
+    2:{"name": "spear", "damage":3},
     3:{"name": "dragon mace", "damage":5}
     }
 
@@ -56,7 +56,7 @@ monster_list = {
     5:{"name": "Boss dragon", "mon_level": 10, "mon_attack": 7, "mon_health": 50, "exp": 50}
     }
 
-#battle logic here
+#battle logic:
 def battle():
     global weapon_damage
     global armour_defence
@@ -116,7 +116,7 @@ def battle():
     return current_hp
 
 
-#boss battle logic here
+#boss battle logic:
 def boss_battle():
     global weapon_damage
     global armour_defence
@@ -128,9 +128,9 @@ def boss_battle():
     #check if ready
     print("boss count:", boss_count)
     print("You find the dragons castle!")
-    if level != 10:
+    if level <8 :
         print("You are currently level",level)
-        print("The dragon is stronger than you... maybe you should come back later.")
+        print("The dragon is much stronger than you... maybe you should come back later.")
         answer=input("If you want to attack anyway, type 'attack': ")
         if answer.lower() != "attack":
             boss_count-=10
@@ -145,6 +145,7 @@ def boss_battle():
     mon_hp=monster_list[mon_id]["mon_health"]
     mon_attack=monster_list[mon_id]["mon_attack"]
     print("You encounter the",mon_name)
+    input("Prepare for battle:")
 
     while current_hp>0 and mon_hp>0:
         your_damage=weapon_damage + int(level/2) + random.randint(0,3)
@@ -163,10 +164,8 @@ def boss_battle():
         print("Your earn",monster_list[mon_id]["exp"], "exp")
         gain_exp(monster_list[mon_id]["exp"])
         boss_battle_done=True
-        return current_hp, boss_battle_done
     else:
         print("You were beaten by the", mon_name)
-        return current_hp, boss_battle_done
     return current_hp, boss_battle_done
     
 
@@ -181,7 +180,7 @@ def gain_exp(exp):
     current_exp+=exp
     if current_exp >= req_exp and level < 10:
         level += 1
-        max_hp += 5
+        max_hp += 3
         current_hp=max_hp
         req_exp += 2
         current_exp=0
@@ -247,7 +246,7 @@ def treasure():
             print("but it's not better than your current armour.")
             return
     else:
-        print("You didn't find anything special")
+        print("You didn't find anything useful")
         
 
 #turn logic
@@ -271,7 +270,7 @@ def random_event(ran_num):
         inn_check=0
         boss_count+=1
         return inn_check, boss_count
-    elif boss_count==20:
+    elif boss_count==25:
         boss_battle()
         return boss_count, current_hp, boss_battle_done
     elif ran_num in (1,2,3):
@@ -306,16 +305,10 @@ def random_event(ran_num):
         boss_battle()
         return boss_count, current_hp, boss_battle_done
 
-
-boss_battle_done=False
-inn_check=0
-boss_count=0
-turn=1
-
 while boss_battle_done == False and current_hp > 0:
     ran_num=random.randint(1,15)
     print("Turn:",turn)
-#    print("dice roll:",ran_num)
+    #print("dice roll:",ran_num)
     random_event(ran_num)
     turn+=1
     print("---------------------------")
