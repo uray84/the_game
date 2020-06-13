@@ -2,7 +2,7 @@
 import random
 
 # settings:
-boss_battle_done = False
+boss_battle_done: bool = False
 inn_check = 0
 boss_count = 0
 turn = 1
