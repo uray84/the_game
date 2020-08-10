@@ -166,8 +166,8 @@ def boss_battle():
         print("-----")
     if current_hp > 0 >= mon_hp:
         print(f"You beat the {mon_name}")
-        print(f"Your earn {monster_list[mon_id]['exp']} exp")
-        gain_exp(monster_list[mon_id]["exp"])
+        print(f"Your earn {earned_exp} exp")
+        gain_exp(earned_exp)
         boss_battle_done = True
     else:
         print(f"You were beaten by the {mon_name}")
