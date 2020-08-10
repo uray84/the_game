@@ -2,7 +2,7 @@
 import random
 
 # settings:
-boss_battle_done: bool = False
+boss_battle_done = False
 inn_check = 0
 boss_count = 0
 turn = 1
@@ -66,24 +66,24 @@ def battle():
 
     # choose monster
     mon_numb = random.randint(1, 10)
-    if level in (1, 2, 3):
-        if mon_numb in (1, 2, 3, 4, 5, 6):
+    if level <= 3:
+        if mon_numb <= 6:
             mon_id = 1
         else:
             mon_id = 2
-    elif level in (4, 5, 6, 7, 8):
-        if mon_numb in (1, 4):
+    elif 4 <= level <= 8:
+        if mon_numb <= 4:
             mon_id = 1
-        elif mon_numb in (5, 6, 7, 8):
+        elif 5 <= mon_numb <= 8:
             mon_id = 2
         else:
             mon_id = 3
     else:
-        if mon_numb in (1, 2, 3, 4):
+        if mon_numb <= 4:
             mon_id = 1
-        elif mon_numb in (5, 6, 7):
+        elif 5 <= mon_numb <= 7:
             mon_id = 2
-        elif mon_numb in (8, 9):
+        elif 8 <= mon_numb <= 9:
             mon_id = 3
         else:
             mon_id = 4
@@ -92,7 +92,9 @@ def battle():
     mon_name = monster_list[mon_id]["name"]
     mon_hp = monster_list[mon_id]["mon_health"]
     mon_attack = monster_list[mon_id]["mon_attack"]
-    print("You encounter a", mon_name)
+    earned_exp = monster_list[mon_id]["exp"]
+
+    print(f"You encounter a {mon_name}")
 
     while current_hp > 0 and mon_hp > 0:
         your_damage = weapon_damage + int(level/2) + random.randint(0, 3)
@@ -101,19 +103,19 @@ def battle():
             mon_damage = 1
         mon_hp = mon_hp-your_damage
         current_hp = current_hp - (mon_attack-armour_defence)
-        print("You attack the", mon_name, "for", your_damage, "damage")
-        print("The", mon_name, "attacks you for", mon_damage, "damage")
-        print("Current HP:", current_hp)
-        print("Monster HP:", mon_hp)
+        print(f"You attack the {mon_name} for {your_damage} damage")
+        print(f"The {mon_name} attacks you for {mon_damage} damage")
+        print(f"Current HP: {current_hp}")
+        print(f"Monster HP: {mon_hp}")
         print("-----")
 
     if current_hp > 0 >= mon_hp:
-        print("You beat the", mon_name)
-        print("Your earn", monster_list[mon_id]["exp"], "exp")
-        gain_exp(monster_list[mon_id]["exp"])
+        print(f"You beat the {mon_name}")
+        print(f"Your earn {earned_exp} exp")
+        gain_exp(earned_exp)
 
     else:
-        print("You were beaten by the", mon_name)
+        print(f"You were beaten by the {mon_name}")
     return current_hp
 
 
@@ -130,7 +132,7 @@ def boss_battle():
     # print(f"boss count: {boss_count}")
     print("You find the dragons castle!")
     if level < 8:
-        print("You are currently level", level)
+        print(f"You are currently level {level}")
         print("The dragon is much stronger than you... maybe you should come back later.")
         answer = input("If you want to attack anyway, type 'attack': ")
         if answer.lower() != "attack":
@@ -145,8 +147,10 @@ def boss_battle():
     mon_name = monster_list[mon_id]["name"]
     mon_hp = monster_list[mon_id]["mon_health"]
     mon_attack = monster_list[mon_id]["mon_attack"]
+    earned_exp = monster_list[mon_id]["exp"]
+
     print("You encounter the", mon_name)
-    input("Prepare for battle:")
+    input("Prepare for your final battle!")
 
     while current_hp > 0 and mon_hp > 0:
         your_damage = weapon_damage + int(level/2) + random.randint(0, 3)
@@ -155,18 +159,18 @@ def boss_battle():
             mon_damage = 1
         mon_hp = mon_hp-your_damage
         current_hp = current_hp - (mon_attack-armour_defence)
-        print("You attack the", mon_name, "for", your_damage, "damage")
-        print("The", mon_name, "attacks you for", mon_damage, "damage")
-        print("Current HP:", current_hp)
-        print("Boss HP:", mon_hp)
+        print(f"You attack the {mon_name} for {your_damage} damage")
+        print(f"The {mon_name} attacks you for {mon_damage} damage")
+        print(f"Current HP: {current_hp}")
+        print(f"Boss HP: {mon_hp}")
         print("-----")
     if current_hp > 0 >= mon_hp:
-        print("You beat the", mon_name)
-        print("Your earn", monster_list[mon_id]["exp"], "exp")
+        print(f"You beat the {mon_name}")
+        print(f"Your earn {monster_list[mon_id]['exp']} exp")
         gain_exp(monster_list[mon_id]["exp"])
         boss_battle_done = True
     else:
-        print("You were beaten by the", mon_name)
+        print(f"You were beaten by the {mon_name}")
     return current_hp, boss_battle_done
 
 
@@ -186,14 +190,14 @@ def gain_exp(exp):
         req_exp += 2
         current_exp = 0
         inn_check = 0
-        print("Level up! You are now level", level)
-        print("HP Refreshed. Max HP now", max_hp)
+        print(f"Level up! You are now level {level}")
+        print(f"HP Refreshed. Max HP now {max_hp}")
     elif current_exp >= req_exp:
         current_exp = 0
         current_hp = max_hp
         print("HP Refreshed")
         inn_check = 0
-    print(req_exp-current_exp, "exp until next level.")
+    print(f"{req_exp - current_exp} exp until next level.")
     return current_exp, current_hp, level, inn_check, max_hp
 
 
@@ -217,7 +221,7 @@ def treasure():
         else:
             print("You found a broken weapon.")
             return
-        print("You found a", weapon_list[weap_choice]["name"])
+        print(f"You found a {weapon_list[weap_choice]['name']}")
         if weapon_list[weap_choice]["damage"] > weapon_damage:
             weapon = weapon_list[weap_choice]["name"]
             weapon_damage = weapon_list[weap_choice]["damage"]
@@ -239,7 +243,7 @@ def treasure():
         else:
             print("You found some broken armour.")
             return
-        print("You found some", armour_list[arm_choice]["name"])
+        print(f"You found some {armour_list[arm_choice]['name']}")
         if armour_list[arm_choice]["defence"] > armour_defence:
             armour = armour_list[arm_choice]["name"]
             armour_defence = armour_list[arm_choice]["defence"]
@@ -267,7 +271,7 @@ def random_event(number):
         if current_hp < max_hp:
             print("You find an inn and stop to rest.\n Your HP has been restored.")
             current_hp = max_hp
-            print("Current HP:", current_hp)
+            print(f"Current HP: {current_hp}")
         else:
             print("You find an inn, but are not tired so continue on.")
         inn_check = 0
@@ -290,8 +294,8 @@ def random_event(number):
 
         print("You find a treasure chest!")
         treasure()
-        print("Weapon:", weapon, ", Damage:", weapon_damage)
-        print("Armour:", armour, ", Defence:", armour_defence)
+        print(f"Weapon: {weapon}, Damage: {weapon_damage}")
+        print(f"Armour: {armour}, Defence: {armour_defence}")
         inn_check += 1
         boss_count += 1
         return inn_check, boss_count
@@ -300,7 +304,7 @@ def random_event(number):
         if current_hp < max_hp:
             print("You find an inn and stop to rest.\n Your HP has been restored.")
             current_hp = max_hp
-            print("Current HP:", current_hp)
+            print(f"Current HP: {current_hp}")
         else:
             print("You find an inn, but are not tired so continue on.")
         inn_check = 0
@@ -313,8 +317,8 @@ def random_event(number):
 
 while boss_battle_done is False and current_hp > 0:
     ran_num = random.randint(1, 15)
-    print("Turn:", turn)
-    print("dice roll:", ran_num)
+    print(f"Turn: {turn}")
+    print(f"dice roll: {ran_num}")
     random_event(ran_num)
     turn += 1
     print("---------------------------")
