@@ -23,14 +23,14 @@ weapon_damage = 1
 armour = "clothes"
 armour_defence = 0
 
-# print("Your name is",name)
-print("level:", level)
-print("Max HP:", max_hp)
-print("Current HP:", current_hp)
-print("Current Exp:", current_exp)
-print("Exp for level up:", req_exp)
-print("Weapon:", weapon, ", Damage:", weapon_damage)
-print("Armour:", armour, ", Defence:", armour_defence)
+# print(f"Your name is {name}")
+print(f"level: {level}")
+print(f"Max HP: {max_hp}")
+print(f"Current HP: {current_hp}")
+print(f"Current Exp: {current_exp}")
+print(f"Exp for level up: {req_exp}")
+print(f"Weapon:{weapon} Damage: {weapon_damage}")
+print(f"Armour:{armour} Defence: {armour_defence}")
 print("======================")
 
 # weapon dict
@@ -53,8 +53,8 @@ monster_list = {
     2: {"name": "skeleton", "mon_level": 2, "mon_attack": 2, "mon_health": 4, "exp": 4},
     3: {"name": "zombie", "mon_level": 5, "mon_attack": 3, "mon_health": 10, "exp": 10},
     4: {"name": "mini dragon", "mon_level": 10, "mon_attack": 5, "mon_health": 20, "exp": 50},
-    5: {"name": "Boss dragon", "mon_level": 10, "mon_attack": 7, "mon_health": 50, "exp": 50}
-    }
+    5: {"name": "Boss dragon", "mon_level": 10, "mon_attack": 7, "mon_health": 50, "exp": 50},
+}
 
 
 # battle logic:
@@ -127,7 +127,7 @@ def boss_battle():
     global boss_battle_done
 
     # check if ready
-    print("boss count:", boss_count)
+    # print(f"boss count: {boss_count}")
     print("You find the dragons castle!")
     if level < 8:
         print("You are currently level", level)
@@ -275,17 +275,18 @@ def random_event(ran_num):
     elif boss_count == 25:
         boss_battle()
         return boss_count, current_hp, boss_battle_done
-    elif ran_num in (1, 2, 3):
+    elif number <= 3:
         print("You continue down the road.")
         inn_check += 1
         boss_count += 1
         return inn_check, boss_count
-    elif ran_num in (4, 5, 6, 7, 8, 9):
+    elif 4 >= number <= 9:
         battle()
         inn_check += 1
         boss_count += 1
         return inn_check, boss_count
-    elif ran_num in (10, 11):
+    elif 10 >= number <= 11:
+
         print("You find a treasure chest!")
         treasure()
         print("Weapon:", weapon, ", Damage:", weapon_damage)
@@ -293,7 +294,8 @@ def random_event(ran_num):
         inn_check += 1
         boss_count += 1
         return inn_check, boss_count
-    elif ran_num in (12, 13, 14):
+    elif 12 >= number <= 14:
+
         if current_hp < max_hp:
             print("You find an inn and stop to rest.\n Your HP has been restored.")
             current_hp = max_hp
@@ -316,10 +318,13 @@ while boss_battle_done is False and current_hp > 0:
     turn += 1
     print("---------------------------")
     input("Continue:")
+
 if current_hp <= 0:
     print("Sorry, you died. Please try again")
-elif boss_battle_done is True:
-    print("Congratulations, you completed your adventure in", turn-1, "turns.")
+
+elif boss_battle_done:
+    print(f"Congratulations, you completed your adventure in {turn - 1} turns.")
 else:
     print("something went weird")
-print("You had a", weapon, "and were wearing", armour)
+print(f"You had a {weapon} and were wearing {armour}")
+
