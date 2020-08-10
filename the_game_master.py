@@ -226,6 +226,7 @@ def treasure():
         else:
             print("but it's not better than your current weapon.")
             return
+
     # get armour
     elif treas_num in (5, 6, 7, 8, 9):
         arm_num = random.randint(0, 10)
@@ -252,7 +253,7 @@ def treasure():
 
 
 # turn logic
-def random_event(ran_num):
+def random_event(number):
     global inn_check
     global boss_count
     global current_hp
@@ -262,7 +263,7 @@ def random_event(ran_num):
     if boss_count < 0:
         boss_count = 0
 
-    if inn_check >= 6:
+    if inn_check >= 8:
         if current_hp < max_hp:
             print("You find an inn and stop to rest.\n Your HP has been restored.")
             current_hp = max_hp
@@ -272,20 +273,20 @@ def random_event(ran_num):
         inn_check = 0
         boss_count += 1
         return inn_check, boss_count
-    elif boss_count == 25:
+    elif boss_count == 30:
         boss_battle()
         return boss_count, current_hp, boss_battle_done
-    elif number <= 3:
+    elif number <= 2:
         print("You continue down the road.")
         inn_check += 1
         boss_count += 1
         return inn_check, boss_count
-    elif 4 >= number <= 9:
+    elif 3 <= number <= 9:
         battle()
         inn_check += 1
         boss_count += 1
         return inn_check, boss_count
-    elif 10 >= number <= 11:
+    elif 10 <= number <= 11:
 
         print("You find a treasure chest!")
         treasure()
@@ -294,7 +295,7 @@ def random_event(ran_num):
         inn_check += 1
         boss_count += 1
         return inn_check, boss_count
-    elif 12 >= number <= 14:
+    elif 12 <= number <= 14:
 
         if current_hp < max_hp:
             print("You find an inn and stop to rest.\n Your HP has been restored.")
@@ -313,7 +314,7 @@ def random_event(ran_num):
 while boss_battle_done is False and current_hp > 0:
     ran_num = random.randint(1, 15)
     print("Turn:", turn)
-    # print("dice roll:",ran_num)
+    print("dice roll:", ran_num)
     random_event(ran_num)
     turn += 1
     print("---------------------------")
@@ -327,4 +328,3 @@ elif boss_battle_done:
 else:
     print("something went weird")
 print(f"You had a {weapon} and were wearing {armour}")
-
